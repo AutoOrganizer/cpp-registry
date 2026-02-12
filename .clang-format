@@ -1,0 +1,49 @@
+# @format
+
+AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Left
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments: Consecutive
+AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: None
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: Yes
+BasedOnStyle: WebKit
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
+BreakBeforeInheritanceComma: true
+BreakInheritanceList: BeforeColon
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: 160
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 4
+# IncludeBlocks: Regroup
+# IncludeCategories:
+#     - Regex: "^<[a-zA-Z0-9_]{1,}>"
+#       Priority: 1
+#       SortPriority: 1
+#     - Regex: "^<ext/[a-zA-Z0-9_]{1,}>"
+#       Priority: 1
+#       SortPriority: 2
+#     - Regex: "^<.*"
+#       Priority: 3
+#     - Regex: ".*"
+#       Priority: 4
+EmptyLineBeforeAccessModifier: Leave
+IndentCaseBlocks: false
+IndentCaseLabels: true
+MaxEmptyLinesToKeep: 2
+NamespaceIndentation: All
+SortIncludes: false
+SortUsingDeclarations: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+TabWidth: 4
+UseTab: ForIndentation

@@ -1,0 +1,170 @@
+Checks: '-*
+  ,bugprone*
+  ,performance*
+  ,cppcoreguidelines*
+  ,readability-identifier-naming
+  ,readability-identifier-length
+  ,readability-braces-around-statements
+  ,readability-else-after-return
+  ,abseil-cleanup-ctad
+  '
+
+CheckOptions:
+# macro
+# #define TEST_MACRO 42
+- key: readability-identifier-naming.MacroDefinitionCase
+  value: UPPER_CASE
+# namespace
+# namespace testNameSpace {}
+- key: readability-identifier-naming.NamespaceCase
+  value: camelBack
+# typedef / using alias
+# using TestTypeAlias = int;
+- key: readability-identifier-naming.TypeAliasCase
+  value: CamelCase
+# typedef alias
+# typedef int TestTypeAlias;
+- key: readability-identifier-naming.TypedefCase
+  value: CamelCase
+# union
+# union TestUnion {};
+- key: readability-identifier-naming.UnionCase
+  value: CamelCase
+# class/struct
+# class TestClass {};
+- key: readability-identifier-naming.ClassCase
+  value: CamelCase
+
+
+# class/struct all non-static members
+# class TestClass {
+# private:
+#   size_t m_nTestPrivateMember_;
+# protected:
+#   size_t m_nTestProtectedMember_;
+# };
+- key: readability-identifier-naming.MemberCase
+  value: camelBack
+- key: readability-identifier-naming.MemberPrefix
+  value: m_
+- key: readability-identifier-naming.MemberSuffix
+  value: _
+# class/struct public non-static members
+# struct TestStruct {
+#   size_t nTestMember;
+# };
+- key: readability-identifier-naming.PublicMemberCase
+  value: camelBack
+# class/struct all static members
+# class TestClass {
+#   size_t nTestMember;
+# };
+- key: readability-identifier-naming.ClassMemberCase
+  value: camelBack
+- key: readability-identifier-naming.ClassMemberPrefix
+  value: s_
+
+
+# constant (all constants)
+- key: readability-identifier-naming.ConstantCase
+  value: camelBack
+# global constant or static member constant
+# const size_t gc_nTestConstant = 42;
+#
+# class TestClass {
+#  static const size_t gc_nTestConstant = 42;
+# };
+- key: readability-identifier-naming.GlobalConstantCase
+  value: camelCase
+- key: readability-identifier-naming.GlobalConstantPrefix
+  value: gc_
+# static constant (static local variable)
+# void testFunc() {
+#   static const size_t sc_nTestConstant = 42;
+# }
+- key: readability-identifier-naming.StaticConstantCase
+  value: camelBack
+- key: readability-identifier-naming.StaticConstantPrefix
+  value: sc_
+
+
+# function parameter
+# void testFunc(int p_nTestParameter) {}
+- key: readability-identifier-naming.ParameterCase
+  value: camelBack
+- key: readability-identifier-naming.ParameterPrefix
+  value: p_
+# function constant parameter
+# void testFunc(const int p_nTestParameter) {}
+- key: readability-identifier-naming.ConstantParameterCase
+  value: camelBack
+- key: readability-identifier-naming.ConstantParameterPrefix
+  value: p_
+
+
+# enum
+# enum TestEnum { TestValueA, TestValueB };
+# enum class TestEnumClass { TestEnumClassA, TestEnumClassB };
+- key: readability-identifier-naming.EnumCase
+  value: CamelCase
+- key: readability-identifier-naming.EnumConstantCase
+  value: CamelCase
+
+
+# all functions except class/struct non-static methods
+- key: readability-identifier-naming.FunctionCase
+  value: camelBack
+# class/struct all member functions
+# class TestClass {
+# public:
+#   void testMethod();
+#   static void testStaticMethod();
+# };
+- key: readability-identifier-naming.MethodCase
+  value: camelBack
+- key: readability-identifier-naming.MethodSuffix
+  value: _
+# class/struct private member functions
+# class TestClass {
+# public:
+#   void testPrivateMethod_();
+#   static void testPrivateStaticMethod_();
+# };
+- key: readability-identifier-naming.PublicMethodCase
+  value: camelBack
+
+
+# local variables
+# void testFunc() {
+#   size_t nTestLocalVariable;
+# }
+- key: readability-identifier-naming.VariableCase
+  value: camelBack
+# global non-constant variables
+# size_t g_nTestGlobalVariable;
+- key: readability-identifier-naming.GlobalVariableCase
+  value: camelBack
+- key: readability-identifier-naming.GlobalVariablePrefix
+  value: g_
+# local static variables
+# int testFunc() {
+#   static size_t s_nTestStaticVariable;
+# }
+- key: readability-identifier-naming.StaticVariableCase
+  value: camelBack
+- key: readability-identifier-naming.StaticVariablePrefix
+  value: s_
+
+
+# template parameter
+# template <typename ParamT_>
+- key: readability-identifier-naming.TemplateParameterCase
+  value: CamelCase
+- key: readability-identifier-naming.TemplateParameterSuffix
+  value: T_
+# value template parameter
+# template <size_t ValueParam_>
+- key: readability-identifier-naming.ValueTemplateParameterCase
+  value: CamelCase
+- key: readability-identifier-naming.ValueTemplateParameterSuffix
+  value: _

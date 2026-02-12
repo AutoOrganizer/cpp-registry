@@ -1,0 +1,3 @@
+[submodule "deps/CommonCMakeBuildScripts"]
+	path = deps/CommonCMakeBuildScripts
+	url = git@github.com:Karelian-na/CommonCMakeBuildScripts.git
