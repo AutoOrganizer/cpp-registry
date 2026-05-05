@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.28.1)
 include(./deps/CommonCMakeBuildScripts/common.cmake)
+include(./deps/CommonCMakeBuildScripts/install.common.cmake)
 
 project(cpp-registry)
 PrepareProject()
@@ -17,3 +18,5 @@ if(CPP_REGISTRY_BUILD_TESTS)
 endif()
 
 OutputTargetsInfos()
+
+InstallProject(TARGETS "${CMAKE_SOURCE_DIR}/cpp-registryConfig.cmake.in" "0.1.0" SameMajorVersion "${PROJECT_NAME}Targets.cmake")
