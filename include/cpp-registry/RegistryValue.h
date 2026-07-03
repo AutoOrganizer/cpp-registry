@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <span>
@@ -31,8 +32,8 @@ namespace kare {
 		};
 
 	private:
-		DWORD             m_dwType_;
-		std::vector<byte> m_vBuffer_;
+		DWORD                      m_dwType_;
+		std::vector<unsigned char> m_vBuffer_;
 
 	public:
 		RegistryValue()
@@ -46,7 +47,8 @@ namespace kare {
 			m_vBuffer_.resize(sizeof(ArgT_));
 			if (p_bBigEndian) {
 				for (size_t i = 0; i < sizeof(ArgT_); i++) {
-					m_vBuffer_[sizeof(ArgT_) - 1 - i] = static_cast<byte>((p_value >> (i * 8)) & 0xFF); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+					m_vBuffer_[sizeof(ArgT_) - 1 - i]
+					    = static_cast<unsigned char>((p_value >> (i * 8)) & 0xFF); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 				}
 			} else {
 				::memcpy(m_vBuffer_.data(), &p_value, sizeof(ArgT_));
@@ -82,7 +84,7 @@ namespace kare {
 		 * @param p_dwType The raw registry type
 		 * @date 2026-03-13 14:21
 		 */
-		RegistryValue(std::span<byte> p_vBuffer, DWORD p_dwType = REG_BINARY);
+		RegistryValue(std::span<unsigned char> p_vBuffer, DWORD p_dwType = REG_BINARY);
 
 		/**
 		 * @brief Get the type of the registry value
@@ -119,30 +121,30 @@ namespace kare {
 		 * @date 2026-03-10 17:42
 		 */
 		std::string_view stringValue() const&;
-		std::string stringValue() const&& {
+		std::string      stringValue() const&& {
 			return std::string(this->stringValue());
 		}
 
 		/**
 		 * @brief Get the multi string value
-		 * @return std::vector<std::string_view>
 		 * @date 2026-03-10 17:42
 		 */
 		std::vector<std::string_view> multiStringValue() const&;
-		std::vector<std::string> multiStringValue() const&& {
-			std::vector<std::string> result;
-			for (const auto& str : this->multiStringValue()) {
-				result.emplace_back(str);
-			}
+		std::vector<std::string>      multiStringValue() const&& {
+			std::vector<std::string_view> temp = this->multiStringValue();
+
+			std::vector<std::string> result(temp.size());
+			std::transform(temp.begin(), temp.end(), result.begin(), [](std::string_view p_sv) {
+				return std::string(p_sv);
+			});
 			return result;
 		}
 
 		/**
 		 * @brief Get the binary value
-		 * @return std::vector<byte>
 		 * @date 2026-03-10 17:42
 		 */
-		const std::vector<byte>& binaryValue() const;
+		const std::vector<unsigned char>& binaryValue() const;
 
 		/**
 		 * @brief Get the raw type of the registry value

@@ -1,6 +1,8 @@
 #pragma once
 #include <exception>
 #include <string_view>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 
 namespace kare {

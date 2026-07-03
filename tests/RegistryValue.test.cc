@@ -103,17 +103,18 @@ TEST(RegistryValueTest, StringConstructorPreservesEmbeddedNullAndAppendsTerminat
 }
 
 TEST(RegistryValueTest, MultiStringFromRawDoubleTerminatorParsesAsEmptyList) {
-	std::vector<byte> raw { static_cast<byte>('\0'), static_cast<byte>('\0') };
-	RegistryValue     value(std::span<byte>(raw.data(), raw.size()), REG_MULTI_SZ);
+	std::vector   raw { static_cast<unsigned char>('\0'), static_cast<unsigned char>('\0') };
+	RegistryValue value(std::span<unsigned char>(raw.data(), raw.size()), REG_MULTI_SZ);
 
 	EXPECT_TRUE(value.multiStringValue().empty());
 }
 
 TEST(RegistryValueTest, MultiStringFromRawWithEmbeddedEmptySegmentSkipsEmptyItems) {
-	std::vector<byte> raw {
-		static_cast<byte>('a'), static_cast<byte>('\0'), static_cast<byte>('\0'), static_cast<byte>('b'), static_cast<byte>('\0'), static_cast<byte>('\0'),
+	std::vector raw {
+		static_cast<unsigned char>('a'), static_cast<unsigned char>('\0'), static_cast<unsigned char>('\0'),
+		static_cast<unsigned char>('b'), static_cast<unsigned char>('\0'), static_cast<unsigned char>('\0'),
 	};
-	RegistryValue value(std::span<byte>(raw.data(), raw.size()), REG_MULTI_SZ);
+	RegistryValue value(std::span<unsigned char>(raw.data(), raw.size()), REG_MULTI_SZ);
 
 	const std::vector<std::string> expected { "a", "b" };
 	std::vector<std::string_view>  actual = value.multiStringValue();
@@ -124,11 +125,11 @@ TEST(RegistryValueTest, MultiStringFromRawWithEmbeddedEmptySegmentSkipsEmptyItem
 }
 
 TEST(RegistryValueTest, BinaryConstructorAndAccess) {
-	constexpr byte    firstByte  = static_cast<byte>(0x10);
-	constexpr byte    secondByte = static_cast<byte>(0x20);
-	constexpr byte    thirdByte  = static_cast<byte>(0x30);
-	std::vector<byte> buffer { firstByte, secondByte, thirdByte };
-	RegistryValue     value(std::span<byte>(buffer.data(), buffer.size()));
+	constexpr unsigned char    firstbyte  = static_cast<unsigned char>(0x10);
+	constexpr unsigned char    secondbyte = static_cast<unsigned char>(0x20);
+	constexpr unsigned char    thirdbyte  = static_cast<unsigned char>(0x30);
+	std::vector<unsigned char> buffer { firstbyte, secondbyte, thirdbyte };
+	RegistryValue              value(std::span<unsigned char>(buffer.data(), buffer.size()));
 
 	EXPECT_EQ(value.type(), RegistryValue::Type::Binary);
 	EXPECT_EQ(value.rawType(), REG_BINARY);
@@ -136,9 +137,9 @@ TEST(RegistryValueTest, BinaryConstructorAndAccess) {
 }
 
 TEST(RegistryValueTest, BinaryConstructorWithCustomType) {
-	std::vector<byte> buffer { static_cast<byte>('x'), static_cast<byte>('y') };
-	RegistryValue     value(std::span<byte>(buffer.data(), buffer.size()), REG_LINK);
-	std::string_view  textValue = value.stringValue();
+	std::vector      buffer { static_cast<unsigned char>('x'), static_cast<unsigned char>('y') };
+	RegistryValue    value(std::span<unsigned char>(buffer.data(), buffer.size()), REG_LINK);
+	std::string_view textValue = value.stringValue();
 
 	EXPECT_EQ(value.type(), RegistryValue::Type::String);
 	EXPECT_EQ(value.rawType(), REG_LINK);
@@ -146,8 +147,8 @@ TEST(RegistryValueTest, BinaryConstructorWithCustomType) {
 }
 
 TEST(RegistryValueTest, BinaryConstructorRejectsRegNoneType) {
-	std::vector<byte> buffer { static_cast<byte>(0x01) };
-	EXPECT_THROW((RegistryValue(std::span<byte>(buffer.data(), buffer.size()), REG_NONE)), InvalidArgumentException);
+	std::vector<unsigned char> buffer { static_cast<unsigned char>(0x01) };
+	EXPECT_THROW((RegistryValue(std::span<unsigned char>(buffer.data(), buffer.size()), REG_NONE)), InvalidArgumentException);
 }
 
 TEST(RegistryValueTest, InvalidTypeAccessThrows) {

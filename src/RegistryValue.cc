@@ -37,7 +37,7 @@ namespace kare {
 		m_vBuffer_.push_back('\0');
 	}
 
-	RegistryValue::RegistryValue(std::span<byte> p_vBuffer, DWORD p_dwType)
+	RegistryValue::RegistryValue(std::span<unsigned char> p_vBuffer, DWORD p_dwType)
 	    : m_dwType_(p_dwType) {
 		if (p_dwType == REG_NONE) {
 			throw InvalidArgumentException("p_dwType");
@@ -172,7 +172,7 @@ namespace kare {
 		throw InvalidAccessException("The registry value is not of a multi string type");
 	}
 
-	const std::vector<byte>& RegistryValue::binaryValue() const {
+	const std::vector<unsigned char>& RegistryValue::binaryValue() const {
 		if (this->type() == Type::Binary) {
 			return m_vBuffer_;
 		}
