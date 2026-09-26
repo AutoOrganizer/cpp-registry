@@ -44,14 +44,14 @@ namespace kare {
 		    requires(std::is_arithmetic_v<ArgT_> && sizeof(ArgT_) <= sizeof(DWORD))
 		RegistryValue(ArgT_ p_value, bool p_bBigEndian = false)
 		    : m_dwType_(p_bBigEndian ? REG_DWORD_BIG_ENDIAN : REG_DWORD) {
-			m_vBuffer_.resize(sizeof(ArgT_));
+			m_vBuffer_.resize(sizeof(DWORD));
 			if (p_bBigEndian) {
-				for (size_t i = 0; i < sizeof(ArgT_); i++) {
-					m_vBuffer_[sizeof(ArgT_) - 1 - i]
+				for (size_t i = 0; i < sizeof(DWORD); i++) {
+					m_vBuffer_[sizeof(DWORD) - 1 - i]
 					    = static_cast<unsigned char>((p_value >> (i * 8)) & 0xFF); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 				}
 			} else {
-				::memcpy(m_vBuffer_.data(), &p_value, sizeof(ArgT_));
+				::memcpy(m_vBuffer_.data(), &p_value, sizeof(DWORD));
 			}
 		}
 
@@ -59,8 +59,8 @@ namespace kare {
 		    requires(std::is_arithmetic_v<ArgT_> && sizeof(ArgT_) > sizeof(DWORD) && sizeof(ArgT_) <= sizeof(UINT64))
 		RegistryValue(ArgT_ p_value)
 		    : m_dwType_(REG_QWORD) {
-			m_vBuffer_.resize(sizeof(ArgT_));
-			::memcpy(m_vBuffer_.data(), &p_value, sizeof(ArgT_));
+			m_vBuffer_.resize(sizeof(UINT64));
+			::memcpy(m_vBuffer_.data(), &p_value, sizeof(UINT64));
 		}
 
 		/**
