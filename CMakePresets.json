@@ -1,0 +1,86 @@
+﻿{
+	"version": 9,
+	"configurePresets": [
+		{
+			"name": "environment-base",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/build/win32/${presetName}",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl.exe",
+				"CMAKE_CXX_COMPILER": "cl.exe"
+			},
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
+		{
+			"name": "x64-debug",
+			"displayName": "x64 Debug",
+			"description": "Build for x64 architecture in Debug mode under CMake deterministic build",
+			"inherits": "environment-base",
+			"architecture": {
+				"value": "x64",
+				"strategy": "external"
+			},
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"TARGET_ARCH": "x64"
+			}
+		},
+		{
+			"name": "x64-release",
+			"displayName": "x64 Release",
+			"description": "Build for x64 architecture in Release mode under CMake deterministic build",
+			"inherits": "x64-debug",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "RelWithDebInfo",
+				"TARGET_ARCH": "x64"
+			}
+		},
+		{
+			"name": "x86-debug",
+			"displayName": "x86 Debug",
+			"description": "Build for x86 architecture in Debug mode under CMake deterministic build",
+			"inherits": "environment-base",
+			"architecture": {
+				"value": "x86",
+				"strategy": "external"
+			},
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"TARGET_ARCH": "x86"
+			}
+		},
+		{
+			"name": "x86-release",
+			"displayName": "x86 Release",
+			"description": "Build for x86 architecture in Release mode under CMake deterministic build",
+			"inherits": "x86-debug",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "RelWithDebInfo",
+				"TARGET_ARCH": "x86"
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "x64-debug",
+			"configurePreset": "x64-debug"
+		},
+		{
+			"name": "x86-debug",
+			"configurePreset": "x86-debug"
+		},
+		{
+			"name": "x64-release",
+			"configurePreset": "x64-release"
+		},
+		{
+			"name": "x86-release",
+			"configurePreset": "x86-release"
+		}
+	]
+}
